@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мифтахов Сергей Артурович | Визитка</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+
+    body {
+      margin: 0;
+      background-image: url(09.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      font-family: 'Montserrat', sans-serif;
+      color: #f5f5f5;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      margin-top: 20px;
+      padding: 0 20px;
+    }
+
+    header h1 {
+        font-size: 2.4rem;
+     font-weight: 800;
+      color: #ff4c29;
+      margin: 0;
+         margin-bottom: 20px;
+         opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 1s ease-out forwards;
+        animation-delay: 0.3s;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    header p {
+      font-size: 1.2rem;
+  font-weight: 400;
+  color: #bbb;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 0.6s;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Анимация появления текста */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Секция с фото */
+    .photo-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 40px auto;
+      max-width: 900px;
+      padding: 0 20px;
+    }
+
+    .photo-container {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s ease;
+      border: 4px solid rgba(255, 76, 41, 0.3);
+    }
+
+    .photo-container:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 76, 41, 0.7);
+    }
+
+    .photo-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(255, 76, 41, 0.2), rgba(255, 76, 41, 0));
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .photo-container:hover::before {
+      opacity: 1;
+    }
+
+    .photo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .photo-container:hover img {
+      transform: scale(1.1);
+    }
+
+    section {
+      max-width: 900px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s ease, background 0.3s ease;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.2s; }
+    .card:nth-child(2) { animation-delay: 0.4s; }
+    .card:nth-child(3) { animation-delay: 0.6s; }
+    .card:nth-child(4) { animation-delay: 0.8s; }
+
+    .card:hover {
+      transform: translateY(-8px);
+      background: #111;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 1rem;
+      color: #ff4c29;
+    }
+
+    .socials {
+      text-align: center;
+      margin-bottom: 25px;
+      opacity: 0;
+      animation: fadeIn 1s ease-out forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .socials h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      border: 2px solid #ff4c29;
+      padding: 10px 20px;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background: #ff4c29;
+      color: #fff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    /* Адаптивность для мобильных устройств */
+    @media (max-width: 768px) {
+      .photo-container {
+        width: 200px;
+        height: 200px;
+      }
+      
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      header p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Мифтахов Сергей Артурович</h1>
+    <p>Трейдер • Бизнесмен • Дизайнер • Программист</p>
+  </header>
+
+  <!-- Секция с фото -->
+  <div class="photo-section">
+    <div class="photo-container">
+      <!-- Замените photo.jpg на путь к вашему фото -->
+      <img src="da.jfif" alt="Мифтахов Сергей Артурович">
+    </div>
+  </div>
+
+  <section>
+
+    <div class="socials">
+      <h2>🔗 Связаться со мной</h2>
+      <div class="social-links">
+        <a href="https://t.me/serrrgom">Telegram</a>
+        <a href="https://www.instagram.com/sergey_miftahov?igsh=NTJ0eTRyZG1vdnp0&utm_source=qr">Instagram</a>
+        <a href="+79220328037">Number</a>
+        <a href="https://wa.me/79220328037">WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>📈Forex Трейдинг</h3>
+        <p>Работаю на рынке Forex, анализирую движения и создаю стратегию с точностью.</p>
+      </div>
+      <div class="card">
+        <h3>💼Бизнес</h3>
+        <p>Запускаю проекты и управляю ими. Предпринимательство — моя страсть.</p>
+      </div>
+      <div class="card">
+        <h3>🎨Дизайн</h3>
+        <p>Создаю стильные, современные и запоминающиеся визуальные решения.</p>
+      </div>
+      <div class="card">
+        <h3>💻Программирование</h3>
+        <p>Разрабатываю проекты и digital-продукты, соединяя креатив и технологии.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    © 2025 Мифтахов Сергей Артурович. Все права защищены.
+  </footer>
+</body>
+</html>
