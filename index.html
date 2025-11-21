@@ -92,22 +92,22 @@
     <form id="calcForm" onsubmit="return false;" aria-describedby="helpText">
       <div>
         <label for="risk">Риск (USD)</label>
-        <input id="risk" name="risk" inputmode="decimal" placeholder="Например: 50" />
+        <input id="risk" name="risk" inputmode="decimal" placeholder="Например: 50" required />
       </div>
 
       <div>
         <label for="leverage">Плечо (Leverage)</label>
-        <input id="leverage" name="leverage" inputmode="decimal" placeholder="Например: 10" />
+        <input id="leverage" name="leverage" inputmode="decimal" placeholder="Например: 10" required />
       </div>
 
       <div class="full">
         <label for="entry">Вход (Entry)</label>
-        <input id="entry" name="entry" inputmode="decimal" placeholder="Например: 20000" />
+        <input id="entry" name="entry" inputmode="decimal" placeholder="Например: 20000" required />
       </div>
 
       <div class="full">
         <label for="stop">Стоп (Stop)</label>
-        <input id="stop" name="stop" inputmode="decimal" placeholder="Например: 19800" />
+        <input id="stop" name="stop" inputmode="decimal" placeholder="Например: 19800" required />
       </div>
 
       <div class="controls full">
@@ -151,18 +151,29 @@
     const errEl = $('error');
     const outEl = $('out');
     if(errEl) errEl.textContent = '';
+
     const risk = parseNum($('risk')?.value);
     const leverage = parseNum($('leverage')?.value);
     const entry = parseNum($('entry')?.value);
     const stop = parseNum($('stop')?.value);
-    if (![risk,leverage,entry,stop].every(n=>Number.isFinite(n))){ if(errEl) errEl.textContent='Пожалуйста, заполните все поля валидными числами.'; if(outEl) outEl.textContent='amount = —'; return;}
+
+    if (![risk,leverage,entry,stop].every(n => Number.isFinite(n))){
+      if(errEl) errEl.textContent = 'Пожалуйста, заполните все поля.';
+      if(outEl) outEl.textContent = 'amount = —';
+      return;
+    }
+
     if(entry===0){ if(errEl) errEl.textContent='Entry не может быть нулём.'; if(outEl) outEl.textContent='amount = —'; return;}
+
     const diffRatio=(entry-stop)/entry;
     if(Math.abs(diffRatio)<Number.EPSILON){ if(errEl) errEl.textContent='Разница Entry и Stop слишком мала — деление невозможно.'; if(outEl) outEl.textContent='amount = —'; return;}
+
     const denominator=leverage*diffRatio;
     if(Math.abs(denominator)<Number.EPSILON){ if(errEl) errEl.textContent='Произведение плеча и разницы равно нулю — проверьте значения.'; if(outEl) outEl.textContent='amount = —'; return;}
+
     const amount=risk/denominator;
-    if(!isFinite(amount)||Number.isNaN(amount)){ if(errEl) errEl.textContent='Получилось недопустимое значение (NaN или бесконечность). Проверьте входные данные.'; if(outEl) outEl.textContent='amount = —'; return;}
+    if(!isFinite(amount)||Number.isNaN(amount)){ if(errEl) errEl.textContent='Получилось недопустимое значение.'; if(outEl) outEl.textContent='amount = —'; return;}
+
     const rounded=Math.round(amount*10000)/10000;
     if(outEl) outEl.textContent='amount = ' + rounded + ' USDT';
   }
@@ -177,7 +188,6 @@
     if(!outEl) return;
     const text = outEl.textContent;
     if(!text || text.includes('—')) return;
-    // Extract only the numeric value
     const match = text.match(/([\d\.]+)/);
     if(!match) return;
     const numberOnly = match[1];
@@ -190,5 +200,6 @@
 </script>
 </body>
 </html>
+
 
 
