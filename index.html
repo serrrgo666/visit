@@ -123,86 +123,85 @@
   </div>
 
 <script>
-  const $ = id => document.getElementById(id);
-  const fields = ['risk','leverage','entry','stop'];
+const $ = id => document.getElementById(id);
+const fields = ['risk','leverage','entry','stop'];
 
-  function parseNum(v){
-    if (v === null || v === undefined) return NaN;
-    v = String(v).trim().replace(/,/g,'.');
-    return Number(v);
-  }
+function parseNum(v){
+  if (v === null || v === undefined) return NaN;
+  v = String(v).trim().replace(/,/g,'.');
+  return Number(v);
+}
 
-  window.addEventListener('DOMContentLoaded', () => {
-    fields.forEach(id => {
-      const el = $(id);
-      if (!el) return;
-      const saved = localStorage.getItem('calc_' + id);
-      if (saved !== null) el.value = saved;
-      el.addEventListener('input', () => { localStorage.setItem('calc_' + id, el.value); });
-      el.addEventListener('keydown', (e) => { if(e.key==='Enter'){ e.preventDefault(); safeCalc(); } });
-    });
+window.addEventListener('DOMContentLoaded', () => {
+  fields.forEach(id => {
+    const el = $(id);
+    if (!el) return;
+    const saved = localStorage.getItem('calc_' + id);
+    if (saved !== null) el.value = saved;
 
-    $('calc')?.addEventListener('click', safeCalc);
-    $('clear')?.addEventListener('click', clearAll);
-    $('copy')?.addEventListener('click', copyResult);
+    el.addEventListener('input', () => { localStorage.setItem('calc_' + id, el.value); });
+    el.addEventListener('keydown', (e) => { if(e.key==='Enter'){ e.preventDefault(); safeCalc(); } });
   });
 
-  function safeCalc(){
-    const errEl = $('error');
-    const outEl = $('out');
-    if(errEl) errEl.textContent = '';
+  $('calc')?.addEventListener('click', safeCalc);
+  $('clear')?.addEventListener('click', clearAll);
+  $('copy')?.addEventListener('click', copyResult);
+});
 
-    const risk = parseNum($('risk')?.value);
-    const leverage = parseNum($('leverage')?.value);
-    const entry = parseNum($('entry')?.value);
-    const stop = parseNum($('stop')?.value);
+function safeCalc(){
+  const errEl = $('error');
+  const outEl = $('out');
+  if(errEl) errEl.textContent = '';
 
-    if (![risk,leverage,entry,stop].every(n => Number.isFinite(n))){
-      if(errEl) errEl.textContent = 'Пожалуйста, заполните все поля.';
-      if(outEl) outEl.textContent = 'amount = —';
-      return;
-    }
+  const risk = parseNum($('risk')?.value);
+  const leverage = parseNum($('leverage')?.value);
+  const entry = parseNum($('entry')?.value);
+  const stop = parseNum($('stop')?.value);
 
-    if(entry===0){ if(errEl) errEl.textContent='Entry не может быть нулём.'; if(outEl) outEl.textContent='amount = —'; return;}
-
-    const diffRatio = (entry - stop)/entry;
-    if(Math.abs(diffRatio)<Number.EPSILON){ if(errEl) errEl.textContent='Разница Entry и Stop слишком мала — деление невозможно.'; if(outEl) outEl.textContent='amount = —'; return;}
-
-    const denominator = leverage * diffRatio;
-    if(Math.abs(denominator)<Number.EPSILON){ if(errEl) errEl.textContent='Произведение плеча и разницы равно нулю — проверьте значения.'; if(outEl) outEl.textContent='amount = —'; return;}
-
-    let amount = risk / denominator;
-    amount = Math.abs(amount);
-
-    if(!isFinite(amount)||Number.isNaN(amount)){ if(errEl) errEl.textContent='Получилось недопустимое значение.'; if(outEl) outEl.textContent='amount = —'; return;}
-
-    const rounded=Math.round(amount*10000)/10000;
-    if(outEl) outEl.textContent='amount = ' + rounded + ' USDT';
+  if ([risk,leverage,entry,stop].some(n => !Number.isFinite(n))){
+    if(errEl) errEl.textContent = 'Все поля обязательны к заполнению.';
+    if(outEl) outEl.textContent = 'amount = —';
+    return;
   }
 
-  function clearAll(){
-    fields.forEach(id=>{ const el=$(id); if(!el) return; el.value=''; localStorage.removeItem('calc_'+id); });
-    const outEl=$('out'); const errEl=$('error'); if(outEl) outEl.textContent='amount = —'; if(errEl) errEl.textContent='';
-  }
+  if(entry===0){ if(errEl) errEl.textContent='Entry не может быть нулём.'; if(outEl) outEl.textContent='amount = —'; return;}
+  const diffRatio = (entry - stop)/entry;
+  if(Math.abs(diffRatio)<Number.EPSILON){ if(errEl) errEl.textContent='Разница Entry и Stop слишком мала — деление невозможно.'; if(outEl) outEl.textContent='amount = —'; return;}
 
-  function copyResult(){
-    const outEl=$('out');
-    if(!outEl) return;
-    const text = outEl.textContent;
-    if(!text || text.includes('—')) return;
-    const match = text.match(/([\d\.]+)/);
-    if(!match) return;
-    const numberOnly = match[1];
-    navigator.clipboard?.writeText(numberOnly).then(()=>{
-      const btn=$('copy'); const prev=btn?.textContent;
-      if(btn) btn.textContent='Скопировано';
-      setTimeout(()=>{if(btn) btn.textContent=prev;},1200);
-    }).catch(()=>alert('Не удалось скопировать'));
-  }
+  const denominator = leverage * diffRatio;
+  if(Math.abs(denominator)<Number.EPSILON){ if(errEl) errEl.textContent='Произведение плеча и разницы равно нулю — проверьте значения.'; if(outEl) outEl.textContent='amount = —'; return;}
+
+  let amount = risk / denominator;
+  amount = Math.abs(amount);
+
+  if(!isFinite(amount)||Number.isNaN(amount)){ if(errEl) errEl.textContent='Получилось недопустимое значение.'; if(outEl) outEl.textContent='amount = —'; return;}
+
+  const rounded=Math.round(amount*10000)/10000;
+  if(outEl) outEl.textContent='amount = ' + rounded + ' USDT';
+}
+
+function clearAll(){
+  fields.forEach(id=>{ const el=$(id); if(!el) return; el.value=''; localStorage.removeItem('calc_'+id); });
+  const outEl=$('out'); const errEl=$('error'); if(outEl) outEl.textContent='amount = —'; if(errEl) errEl.textContent='';
+}
+
+function copyResult(){
+  const outEl=$('out');
+  if(!outEl) return;
+  const text = outEl.textContent;
+  if(!text || text.includes('—')) return;
+  const match = text.match(/([\d\.]+)/);
+  if(!match) return;
+  const numberOnly = match[1];
+  navigator.clipboard?.writeText(numberOnly).then(()=>{
+    const btn=$('copy'); const prev=btn?.textContent;
+    if(btn) btn.textContent='Скопировано';
+    setTimeout(()=>{if(btn) btn.textContent=prev;},1200);
+  }).catch(()=>alert('Не удалось скопировать'))
+}
 </script>
 </body>
 </html>
-
 
 
 
