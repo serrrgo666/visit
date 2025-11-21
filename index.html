@@ -1,288 +1,247 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Мифтахов Сергей Артурович | Визитка</title>
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#121212">
-  <meta name="msapplication-navbutton-color" content="#121212">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
-   :root {
-      --bg-color: #121212;
-    }
-    
-    html {
-      color-scheme: dark;
-      background-color: var(--bg-color);
-    }
-    
-    body {
-      margin: 0;
-      background-image: url(09.jpg);
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-      font-family: 'Montserrat', sans-serif;
-      color: #f5f5f5;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>USDT Amount Calculator</title>
+<style>
+  :root{
+    --bg:#0b0f14;
+    --card:#0f1720;
+    --muted:#9aa6b2;
+    --accent:#23d27a;
+    --accent-2:#da4b48;
+    --glass: rgba(255,255,255,0.03);
+  }
+  *{box-sizing:border-box}
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(35,210,122,0.06), transparent 8%),
+                radial-gradient(900px 500px at 90% 90%, rgba(218,75,72,0.04), transparent 6%),
+                var(--bg);
+    color: #e6edf3;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
 
-    header {
-      text-align: center;
-      margin-top: 20px;
-      padding: 0 20px;
-    }
+  .container {
+    width: 100%;
+    max-width: 560px;
+    background: linear-gradient(180deg,var(--card), #0b1116);
+    padding: 22px;
+    border-radius: 14px;
+    margin-top: 28px;
+    box-shadow: 0 8px 30px rgba(2,6,23,0.7), 0 0 0 1px rgba(255,255,255,0.02) inset;
+    border: 1px solid rgba(255,255,255,0.02);
+  }
 
-    header h1 {
-        font-size: 2.4rem;
-     font-weight: 800;
-      color: #ff4c29;
-      margin: 0;
-         margin-bottom: 20px;
-         opacity: 0;
-        transform: translateY(30px);
-        animation: fadeInUp 1s ease-out forwards;
-        animation-delay: 0.3s;
-        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
-    }
+  .header{display:flex;gap:12px;align-items:center}
+  h1{font-size:18px;margin:0;color:var(--accent)}
+  .subtitle{color:var(--muted);font-size:13px}
 
-    header p {
-      font-size: 1.2rem;
-  font-weight: 400;
-  color: #bbb;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeInUp 1s ease-out forwards;
-  animation-delay: 0.6s;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
-    }
+  .candles{display:flex;gap:6px;margin-left:auto}
+  .candle{width:10px;display:flex;flex-direction:column;align-items:center}
+  .wick{width:2px;height:12px;background:var(--muted);opacity:0.8;margin-bottom:2px}
+  .body-green{width:10px;height:28px;background:linear-gradient(180deg,#23a95a,#238636);border-radius:2px}
+  .body-red{width:10px;height:20px;background:linear-gradient(180deg,#e05a57,#da3633);border-radius:2px}
 
-    /* Анимация появления текста */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+  form{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
+  .full{grid-column:1/-1}
 
-    /* Секция с фото */
-    .photo-section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 40px auto;
-      max-width: 900px;
-      padding: 0 20px;
-    }
+  input{
+    width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:var(--glass);color:inherit;font-size:15px
+  }
 
-    .photo-container {
-      position: relative;
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      transition: all 0.4s ease;
-      border: 4px solid rgba(255, 76, 41, 0.3);
-    }
+  .controls{display:flex;gap:10px;margin-top:14px}
+  .btn{flex:1;padding:10px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+  .btn-primary{background:linear-gradient(180deg,var(--accent),#1fa95f);color:#042014}
+  .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+  .small{flex:0 0 auto;padding:8px 10px}
 
-    .photo-container:hover {
-      transform: scale(1.05);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-      border-color: rgba(255, 76, 41, 0.7);
-    }
+  .result{margin-top:16px;padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);font-size:16px;text-align:center}
+  .error{color:#ffb3b3;font-size:13px;margin-top:8px;text-align:center}
 
-    .photo-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(45deg, rgba(255, 76, 41, 0.2), rgba(255, 76, 41, 0));
-      z-index: 1;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-
-    .photo-container:hover::before {
-      opacity: 1;
-    }
-
-    .photo-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-
-    .photo-container:hover img {
-      transform: scale(1.1);
-    }
-
-    section {
-      max-width: 900px;
-      margin: auto;
-      padding: 0 20px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-    }
-
-    .card {
-      background: #1a1a1a;
-      padding: 30px;
-      border-radius: 10px;
-      text-align: center;
-      transition: transform 0.3s ease, background 0.3s ease;
-      cursor: pointer;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.8s ease-out forwards;
-    }
-
-    .card:nth-child(1) { animation-delay: 0.2s; }
-    .card:nth-child(2) { animation-delay: 0.4s; }
-    .card:nth-child(3) { animation-delay: 0.6s; }
-    .card:nth-child(4) { animation-delay: 0.8s; }
-
-    .card:hover {
-      transform: translateY(-8px);
-      background: #111;
-    }
-
-    .card h3 {
-      margin-top: 0;
-      font-size: 1rem;
-      color: #ff4c29;
-    }
-
-    .socials {
-      text-align: center;
-      margin-bottom: 25px;
-      opacity: 0;
-      animation: fadeIn 1s ease-out forwards;
-      animation-delay: 1s;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .socials h2 {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .social-links a {
-      text-decoration: none;
-      color: #fff;
-      font-weight: 600;
-      border: 2px solid #ff4c29;
-      padding: 10px 20px;
-      border-radius: 30px;
-      transition: all 0.3s ease;
-    }
-
-    .social-links a:hover {
-      background: #ff4c29;
-      color: #fff;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    /* Адаптивность для мобильных устройств */
-    @media (max-width: 768px) {
-      .photo-container {
-        width: 200px;
-        height: 200px;
-      }
-      
-      header h1 {
-        font-size: 2rem;
-      }
-      
-      header p {
-        font-size: 1rem;
-      }
-    }
-  </style>
+  @media (max-width:720px){
+    form{grid-template-columns:1fr;}
+    .candles{display:none}
+    .container{margin-top:18px;padding:18px}
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>Мифтахов Сергей Артурович</h1>
-    <p>Трейдер • Бизнесмен • Дизайнер • Программист</p>
-  </header>
+  <div class="container" role="application" aria-label="USDT amount calculator">
+    <div class="header">
+      <div>
+        <h1>USDT Amount Calculator</h1>
+        <div class="subtitle">amountUSDT = RiskUSD / (Leverage * ((Entry - Stop) / Entry))</div>
+      </div>
 
-  <!-- Секция с фото -->
-  <div class="photo-section">
-    <div class="photo-container">
-      <!-- Замените photo.jpg на путь к вашему фото -->
-      <img src="da.jfif" alt="Мифтахов Сергей Артурович">
+      <div class="candles" aria-hidden="true">
+        <div class="candle"><div class="wick"></div><div class="body-green"></div></div>
+        <div class="candle"><div class="wick"></div><div class="body-red"></div></div>
+        <div class="candle"><div class="wick"></div><div class="body-green" style="height:34px"></div></div>
+        <div class="candle"><div class="wick"></div><div class="body-red" style="height:18px"></div></div>
+      </div>
     </div>
+
+    <form id="calcForm" onsubmit="return false;" aria-describedby="helpText">
+      <div>
+        <label for="risk">Риск (USD)</label>
+        <input id="risk" name="risk" inputmode="decimal" placeholder="Например: 50" />
+      </div>
+
+      <div>
+        <label for="leverage">Плечо (Leverage)</label>
+        <input id="leverage" name="leverage" inputmode="decimal" placeholder="Например: 10" />
+      </div>
+
+      <div class="full">
+        <label for="entry">Вход (Entry)</label>
+        <input id="entry" name="entry" inputmode="decimal" placeholder="Например: 20000" />
+      </div>
+
+      <div class="full">
+        <label for="stop">Стоп (Stop)</label>
+        <input id="stop" name="stop" inputmode="decimal" placeholder="Например: 19800" />
+      </div>
+
+      <div class="controls full">
+        <button id="calc" type="button" class="btn btn-primary">Рассчитать</button>
+        <button id="clear" type="button" class="btn btn-ghost small">Очистить</button>
+        <button id="copy" type="button" class="btn btn-ghost small">Копировать</button>
+      </div>
+    </form>
+
+    <div id="out" class="result" role="status">amount = —</div>
+    <div id="error" class="error" aria-live="polite"></div>
+    <div id="helpText" class="subtitle" style="margin-top:10px">Значения сохраняются автоматически в этом браузере. Нажмите «Копировать» чтобы скопировать результат в буфер обмена.</div>
   </div>
 
-  <section>
+<script>
+  // Safe DOM helper
+  const $ = id => document.getElementById(id);
 
-    <div class="socials">
-      <h2>🔗 Связаться со мной</h2>
-      <div class="social-links">
-        <a href="https://t.me/serrrgom">Telegram</a>
-        <a href="https://www.instagram.com/sergey_miftahov?igsh=NTJ0eTRyZG1vdnp0&utm_source=qr">Instagram</a>
-        <a href="tel:+79220328037">Number</a>
-        <a href="https://wa.me/79220328037">WhatsApp</a>
-      </div>
-    </div>
+  // Fields we persist and their element ids
+  const fields = ['risk','leverage','entry','stop'];
 
-    <div class="cards">
-      <div class="card">
-        <h3>📈Forex Трейдинг</h3>
-        <p>Работаю на рынке Forex, анализирую движения и создаю стратегию с точностью.</p>
-      </div>
-      <div class="card">
-        <h3>💼Бизнес</h3>
-        <p>Запускаю проекты и управляю ими. Предпринимательство — моя страсть.</p>
-      </div>
-      <div class="card">
-        <h3>🎨Дизайн</h3>
-        <p>Создаю стильные, современные и запоминающиеся визуальные решения.</p>
-      </div>
-      <div class="card">
-        <h3>💻Программирование</h3>
-        <p>Разрабатываю проекты и digital-продукты, соединяя креатив и технологии.</p>
-      </div>
-    </div>
+  // Utility: parse number from input (supports comma)
+  function parseNum(v){
+    if (v === null || v === undefined) return NaN;
+    v = String(v).trim().replace(/,/g,'.');
+    return Number(v);
+  }
 
-  </section>
+  // Load saved values from localStorage (if present)
+  window.addEventListener('DOMContentLoaded', () => {
+    fields.forEach(id => {
+      const el = $(id);
+      if (!el) return;
+      const saved = localStorage.getItem('calc_' + id);
+      if (saved !== null) el.value = saved;
 
-  <footer>
-    © 2025 Мифтахов Сергей Артурович. Все права защищены.
-  </footer>
+      // Save on input
+      el.addEventListener('input', () => {
+        localStorage.setItem('calc_' + id, el.value);
+      });
+
+      // allow Enter to calculate
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          safeCalc();
+        }
+      });
+    });
+
+    // Attach button listeners only if elements exist
+    const btnCalc = $('calc');
+    const btnClear = $('clear');
+    const btnCopy = $('copy');
+
+    if (btnCalc) btnCalc.addEventListener('click', safeCalc);
+    if (btnClear) btnClear.addEventListener('click', clearAll);
+    if (btnCopy) btnCopy.addEventListener('click', copyResult);
+  });
+
+  // Main calculation with safety checks
+  function safeCalc(){
+    const errEl = $('error');
+    const outEl = $('out');
+    if (errEl) errEl.textContent = '';
+
+    const risk = parseNum($('risk')?.value);
+    const leverage = parseNum($('leverage')?.value);
+    const entry = parseNum($('entry')?.value);
+    const stop = parseNum($('stop')?.value);
+
+    if (![risk,leverage,entry,stop].every(n => Number.isFinite(n))){
+      if (errEl) errEl.textContent = 'Пожалуйста, заполните все поля валидными числами.';
+      if (outEl) outEl.textContent = 'amount = —';
+      return;
+    }
+
+    if (entry === 0){
+      if (errEl) errEl.textContent = 'Entry не может быть нулём.';
+      if (outEl) outEl.textContent = 'amount = —';
+      return;
+    }
+
+    const diffRatio = (entry - stop) / entry;
+    if (Math.abs(diffRatio) < Number.EPSILON){
+      if (errEl) errEl.textContent = 'Разница Entry и Stop слишком мала — деление невозможно.';
+      if (outEl) outEl.textContent = 'amount = —';
+      return;
+    }
+
+    const denominator = leverage * diffRatio;
+    if (Math.abs(denominator) < Number.EPSILON){
+      if (errEl) errEl.textContent = 'Произведение плеча и разницы равно нулю — проверьте значения.';
+      if (outEl) outEl.textContent = 'amount = —';
+      return;
+    }
+
+    const amount = risk / denominator;
+    if (!isFinite(amount) || Number.isNaN(amount)){
+      if (errEl) errEl.textContent = 'Получилось недопустимое значение (NaN или бесконечность). Проверьте входные данные.';
+      if (outEl) outEl.textContent = 'amount = —';
+      return;
+    }
+
+    const rounded = Math.round(amount * 10000) / 10000;
+    if (outEl) outEl.textContent = 'amount = ' + rounded + ' USDT';
+  }
+
+  function clearAll(){
+    fields.forEach(id => {
+      const el = $(id);
+      if (!el) return;
+      el.value = '';
+      localStorage.removeItem('calc_' + id);
+    });
+    const outEl = $('out');
+    const errEl = $('error');
+    if (outEl) outEl.textContent = 'amount = —';
+    if (errEl) errEl.textContent = '';
+  }
+
+  function copyResult(){
+    const outEl = $('out');
+    if (!outEl) return;
+    const text = outEl.textContent;
+    if (!text || text.includes('—')) return;
+    navigator.clipboard?.writeText(text).then(()=>{
+      const btn = $('copy');
+      const prev = btn?.textContent;
+      if (btn) btn.textContent = 'Скопировано';
+      setTimeout(()=>{ if (btn) btn.textContent = prev; },1200);
+    }).catch(()=> alert('Не удалось скопировать'));
+  }
+</script>
 </body>
-
 </html>
-
 
