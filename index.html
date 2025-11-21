@@ -165,13 +165,15 @@
 
     if(entry===0){ if(errEl) errEl.textContent='Entry не может быть нулём.'; if(outEl) outEl.textContent='amount = —'; return;}
 
-    const diffRatio=(entry-stop)/entry;
+    const diffRatio = (entry - stop)/entry;
     if(Math.abs(diffRatio)<Number.EPSILON){ if(errEl) errEl.textContent='Разница Entry и Stop слишком мала — деление невозможно.'; if(outEl) outEl.textContent='amount = —'; return;}
 
-    const denominator=leverage*diffRatio;
+    const denominator = leverage * diffRatio;
     if(Math.abs(denominator)<Number.EPSILON){ if(errEl) errEl.textContent='Произведение плеча и разницы равно нулю — проверьте значения.'; if(outEl) outEl.textContent='amount = —'; return;}
 
-    const amount=risk/denominator;
+    let amount = risk / denominator;
+    amount = Math.abs(amount);
+
     if(!isFinite(amount)||Number.isNaN(amount)){ if(errEl) errEl.textContent='Получилось недопустимое значение.'; if(outEl) outEl.textContent='amount = —'; return;}
 
     const rounded=Math.round(amount*10000)/10000;
@@ -200,6 +202,7 @@
 </script>
 </body>
 </html>
+
 
 
 
